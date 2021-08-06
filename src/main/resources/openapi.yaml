@@ -1,0 +1,69 @@
+openapi: "3.0.2"
+info:
+  title: Example Loans API
+  version: "1.0"
+servers:
+  - url: localhost:8080
+paths:
+  /schedules:
+    get:
+      operationId: getSchedulesList
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleListResponse'
+    post:
+      operationId: addNewSchedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/component/schemas/SchedulePostBody"
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    SchedulePostBody:
+      type: object
+      properties:
+        assetValue:
+          type: number
+          format: double
+        deposit:
+          type: number
+          format: double
+        annualInterestPcnt:
+          type: number
+          format: double
+        loanDurationMonths:
+          type: integer
+        balloonAmount:
+          type: number
+          format: double
+    ScheduleListResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        scheduleRequestDetails:
+          $ref: "#/component/schemas/SchedulePostBody"
+        monthlyRepayment:
+          type: number
+          format: double
+        totalInterestDue:
+          type: number
+          format: double
+        totalPaymentsDue:
+          type: number
+          format: double
+    ScheduleResponse
+
+
+
+
+
