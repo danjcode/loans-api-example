@@ -22,7 +22,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/component/schemas/SchedulePostBody"
+              $ref: "#/components/schemas/SchedulePostBody"
       responses:
         '201':
           description: Created
@@ -51,7 +51,7 @@ components:
         id:
           type: integer
         scheduleRequestDetails:
-          $ref: "#/component/schemas/SchedulePostBody"
+          $ref: "#/components/schemas/SchedulePostBody"
         monthlyRepayment:
           type: number
           format: double
@@ -61,7 +61,7 @@ components:
         totalPaymentsDue:
           type: number
           format: double
-    ScheduleResponse
+
 
 
 

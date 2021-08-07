@@ -1,5 +1,8 @@
 package tech.danieljones.loansapiexample.util;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 
 public class CalculatorUtil {
@@ -16,7 +19,15 @@ public class CalculatorUtil {
     }
 
     private static double calculateMonthlyPaymentWithoutBalloon(double totalLoanAmount, double annualInterestPcnt, int numberOfPayments) {
-        return (totalLoanAmount * Math.pow(1 + annualInterestPcnt, numberOfPayments) / Math.pow(1 + annualInterestPcnt, numberOfPayments - 1));
+
+        double monthlyInterestPcnt = annualInterestPcnt / 12;
+        double leftPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments);
+        double rightPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments) - 1;
+        double powDiv = leftPow / rightPow;
+        double unroundedMonthlyRepayment = totalLoanAmount * (monthlyInterestPcnt * powDiv);
+
+        return new BigDecimal(unroundedMonthlyRepayment).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
     }
 
     private static double calculateMonthlyPaymentWithBalloon(double totalLoanAmount, double annualInterestPcnt, int numberOfPayments, double balloon) {
@@ -33,7 +44,7 @@ public class CalculatorUtil {
         }
 
         if (!(numberOfPayments > 0)) {
-            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Annual Interest Percentage", annualInterestPcnt));
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Number Of Payments", numberOfPayments));
         }
 
         if (balloon < 0) {

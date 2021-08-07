@@ -1,0 +1,27 @@
+javax:
+  persistance:
+    schema-generation:
+      scripts:
+        action: create
+      create-source: metadata
+      create-target: create.sql
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: true
+        web-allow-others: true
