@@ -5,6 +5,23 @@ info:
 servers:
   - url: localhost:8080
 paths:
+  /schedules/{id}:
+    get:
+      operationId: getSchedule
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+
   /schedules:
     get:
       operationId: getSchedulesList
@@ -45,7 +62,16 @@ components:
         balloonAmount:
           type: number
           format: double
-    ScheduleListResponse:
+    ScheduleResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/ScheduleListResponseItem"
+        - type: array
+          items:
+            $ref: "#/components/schemas/ScheduleItem"
+
+
+    ScheduleListResponseItem:
       type: object
       properties:
         id:
@@ -62,7 +88,31 @@ components:
           type: number
           format: double
 
+    ScheduleItem:
+      type: object
+      properties:
+        period:
+          type: integer
+        payment:
+          type: number
+          format: double
+        priciple:
+          type: number
+          format: double
+        interest:
+          type: number
+          format: double
+        balance:
+          type: number
+          format: double
 
+    ScheduleListResponse:
+      type: object
+      properties:
+        Schedules:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScheduleListResponseItem"
 
 
 

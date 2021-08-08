@@ -7,7 +7,7 @@ import java.util.List;
 public class LoanDetails {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @OneToOne
     private SetupDetails setupDetails;
     @OneToMany(mappedBy = "loanDetails")
@@ -16,11 +16,11 @@ public class LoanDetails {
     private double totalInterestDue;
     private double monthlyRepayment;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

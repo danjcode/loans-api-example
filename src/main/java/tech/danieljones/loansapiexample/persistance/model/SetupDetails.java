@@ -12,7 +12,7 @@ public class SetupDetails {
     private double assetValue;
     private double deposit;
     private double annualInterestPcnt;
-    private double loanDurationMonths;
+    private int loanDurationMonths;
     private double balloonAmount;
 
     public long getId() {
@@ -47,11 +47,11 @@ public class SetupDetails {
         this.annualInterestPcnt = annualInterestPcnt;
     }
 
-    public double getLoanDurationMonths() {
+    public int getLoanDurationMonths() {
         return loanDurationMonths;
     }
 
-    public void setLoanDurationMonths(double loanDurationMonths) {
+    public void setLoanDurationMonths(int loanDurationMonths) {
         this.loanDurationMonths = loanDurationMonths;
     }
 
