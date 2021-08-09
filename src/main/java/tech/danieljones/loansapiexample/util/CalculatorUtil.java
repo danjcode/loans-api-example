@@ -25,7 +25,7 @@ public class CalculatorUtil {
     public static double calculateInterest(double balance, double annualInterestPcnt) {
         validateCalculateInterestParams(balance, annualInterestPcnt);
         double monthlyInterest = annualInterestPcnt / 12;
-        return balance * monthlyInterest;
+        return new BigDecimal(balance * monthlyInterest).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 
     }
 
@@ -41,7 +41,8 @@ public class CalculatorUtil {
 
     public static double calculatePrinciple(double monthlyPaymentAmount, double monthlyInterest) {
         validateCalculatePrincipleParams(monthlyPaymentAmount, monthlyInterest);
-        return monthlyPaymentAmount - monthlyInterest;
+        return new BigDecimal(monthlyPaymentAmount - monthlyInterest).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
     }
 
     private static void validateCalculatePrincipleParams(double monthlyPaymentAmount, double monthlyInterest) {
@@ -56,7 +57,7 @@ public class CalculatorUtil {
 
     public static double calculateRemainingBalance(double currentBalance, double paymentAmount) {
         validateRemainingBalanceParams(currentBalance, paymentAmount);
-        return currentBalance - paymentAmount;
+        return new BigDecimal(currentBalance - paymentAmount).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
     private static void validateRemainingBalanceParams(double currentBalance, double paymentAmount) {
@@ -132,6 +133,8 @@ public class CalculatorUtil {
 
     public static double calculateTotalInterest(double loanAmount, double totalPayment) {
         validateTotalInterestParams(loanAmount, totalPayment);
-        return totalPayment - loanAmount;
+        double unroundedTotalInterest = totalPayment - loanAmount;
+        return new BigDecimal(unroundedTotalInterest).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
     }
 }
