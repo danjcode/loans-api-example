@@ -5,10 +5,12 @@ import tech.danieljones.loansapiexample.loans_api_example.model.ScheduleListResp
 import tech.danieljones.loansapiexample.loans_api_example.model.SchedulePostBody;
 import tech.danieljones.loansapiexample.loans_api_example.model.ScheduleResponse;
 import tech.danieljones.loansapiexample.persistance.model.LoanDetails;
+import tech.danieljones.loansapiexample.persistance.model.ScheduleItem;
 import tech.danieljones.loansapiexample.persistance.model.SetupDetails;
 import tech.danieljones.loansapiexample.util.CalculatorUtil;
 
-import java.nio.file.LinkOption;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Mapper {
@@ -24,6 +26,28 @@ public class Mapper {
         loanDetails.setTotalInterestDue(totalInterest);
         loanDetails.setMonthlyRepayment(monthlyPayment);
         loanDetails.setTotalPaymentsDue(totalPayment);
+
+        double balance = totalPayment;
+
+
+        List<ScheduleItem> scheduleItemList = new ArrayList<>();
+        for (int i = 0; i < schedulePostBody.getLoanDurationMonths(); i++) {
+            ScheduleItem item = new ScheduleItem();
+            balance = CalculatorUtil.calculateRemainingBalance(balance, monthlyPayment);
+            double interest = CalculatorUtil.calculateInterest(balance, schedulePostBody.getAnnualInterestPcnt());
+            double principle = CalculatorUtil.calculatePrinciple(monthlyPayment, interest);
+            item.setPeriod(i+1);
+            item.setPayment(monthlyPayment);
+            item.setInterest(interest);
+            item.setPrinciple(principle);
+            item.setBalance(balance);
+            item.setLoanDetails(loanDetails);
+
+            scheduleItemList.add(item);
+        }
+
+        loanDetails.setScheduleItems(scheduleItemList);
+
         return loanDetails;
     }
 
@@ -41,6 +65,13 @@ public class Mapper {
     }
 
 //    public ScheduleResponse loanDetails2ScheduleResponse(LoanDetails loanDetails) {
+//        ScheduleResponse response = new ScheduleResponse();
+//
+//        response.setId(loanDetails.getId());
+//        response.setScheduleRequestDetails(setupDetails2SchedulePostBody(loanDetails.getSetupDetails()));
+//        response.setTotalPaymentsDue(loanDetails.getTotalPaymentsDue());
+//        response.setTotalInterestDue(loanDetails.getTotalInterestDue());
+//        response.setMonthlyRepayment(loanDetails.getMonthlyRepayment());
 //
 //    }
 

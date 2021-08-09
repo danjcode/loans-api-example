@@ -18,7 +18,7 @@ public class LoanDetailsService {
     }
 
     public Optional<LoanDetails> getLoanDetails(int id) {
-        return loanDetailsRepo.findById(Long.valueOf(id));
+        return loanDetailsRepo.findById(id);
     }
 
     public LoanDetails saveLoanDetails(LoanDetails loanDetails) {

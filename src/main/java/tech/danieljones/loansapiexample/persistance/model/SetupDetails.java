@@ -8,18 +8,18 @@ import javax.persistence.Id;
 public class SetupDetails {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     private double assetValue;
     private double deposit;
     private double annualInterestPcnt;
     private int loanDurationMonths;
     private double balloonAmount;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

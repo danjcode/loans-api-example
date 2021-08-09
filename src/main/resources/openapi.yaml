@@ -21,6 +21,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ScheduleResponse'
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
 
   /schedules:
     get:
@@ -32,6 +38,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ScheduleListResponse'
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
     post:
       operationId: addNewSchedule
       requestBody:
@@ -41,8 +53,14 @@ paths:
             schema:
               $ref: "#/components/schemas/SchedulePostBody"
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
 components:
   schemas:
     SchedulePostBody:
@@ -113,6 +131,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ScheduleListResponseItem"
+
+    errorResponse:
+      type: object
+      properties:
+        message:
+          type: string
 
 
 

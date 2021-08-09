@@ -22,6 +22,54 @@ public class CalculatorUtil {
         return monthlyPaymentAmount * numOfPayments;
     }
 
+    public static double calculateInterest(double balance, double annualInterestPcnt) {
+        validateCalculateInterestParams(balance, annualInterestPcnt);
+        double monthlyInterest = annualInterestPcnt / 12;
+        return balance * monthlyInterest;
+
+    }
+
+    private static void validateCalculateInterestParams(double balance, double annualInterestPcnt) {
+        if (!(balance > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Balance", balance));
+        }
+
+        if (!(annualInterestPcnt > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Annual Interest", annualInterestPcnt));
+        }
+    }
+
+    public static double calculatePrinciple(double monthlyPaymentAmount, double monthlyInterest) {
+        validateCalculatePrincipleParams(monthlyPaymentAmount, monthlyInterest);
+        return monthlyPaymentAmount - monthlyInterest;
+    }
+
+    private static void validateCalculatePrincipleParams(double monthlyPaymentAmount, double monthlyInterest) {
+        if (!(monthlyPaymentAmount > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Monthly Payment Amount", monthlyPaymentAmount));
+        }
+
+        if (!(monthlyInterest > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Monthly Interest", monthlyInterest));
+        }
+    }
+
+    public static double calculateRemainingBalance(double currentBalance, double paymentAmount) {
+        validateRemainingBalanceParams(currentBalance, paymentAmount);
+        return currentBalance - paymentAmount;
+    }
+
+    private static void validateRemainingBalanceParams(double currentBalance, double paymentAmount) {
+        if (!(currentBalance > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Current Balance", currentBalance));
+        }
+
+        if (!(paymentAmount > 0)) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Payment Amount", paymentAmount));
+        }
+
+    }
+
     private static double calculateMonthlyPaymentWithoutBalloon(double totalLoanAmount, double annualInterestPcnt, int numberOfPayments) {
 
         double monthlyInterestPcnt = annualInterestPcnt / 12;

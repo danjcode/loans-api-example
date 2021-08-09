@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class ScheduleItem {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @ManyToOne
     @JoinColumn(name = "loan_details_id", nullable = false)
     private LoanDetails loanDetails;
@@ -16,11 +16,11 @@ public class ScheduleItem {
     private double interest;
     private double balance;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

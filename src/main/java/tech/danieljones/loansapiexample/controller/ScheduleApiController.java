@@ -1,7 +1,6 @@
 package tech.danieljones.loansapiexample.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import tech.danieljones.loansapiexample.loans_api_example.api.SchedulesApi;
