@@ -1,3 +1,4 @@
-- Implement balloon payment functionality
+- <s>Implement balloon payment functionality</s>
 - Add logging
 - Add HATEOAS links
+- Tidy up imports
