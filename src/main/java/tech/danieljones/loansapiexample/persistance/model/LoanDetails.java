@@ -8,9 +8,9 @@ public class LoanDetails {
     @Id
     @GeneratedValue
     private int id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private SetupDetails setupDetails;
-    @OneToMany(mappedBy = "loanDetails")
+    @OneToMany(mappedBy = "loanDetails", cascade=CascadeType.ALL)
     private List<ScheduleItem> scheduleItems;
     private double totalPaymentsDue;
     private double totalInterestDue;

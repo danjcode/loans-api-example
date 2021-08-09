@@ -82,12 +82,24 @@ components:
           format: double
     ScheduleResponse:
       type: object
-      allOf:
-        - $ref: "#/components/schemas/ScheduleListResponseItem"
-        - type: array
+      properties:
+        id:
+          type: integer
+        scheduleRequestDetails:
+          $ref: "#/components/schemas/SchedulePostBody"
+        monthlyRepayment:
+          type: number
+          format: double
+        totalInterestDue:
+          type: number
+          format: double
+        totalPaymentsDue:
+          type: number
+          format: double
+        scheduleDetails:
+          type: array
           items:
             $ref: "#/components/schemas/ScheduleItem"
-
 
     ScheduleListResponseItem:
       type: object

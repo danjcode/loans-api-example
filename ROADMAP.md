@@ -1,0 +1,3 @@
+- Implement balloon payment functionality
+- Add logging
+- Add HATEOAS links

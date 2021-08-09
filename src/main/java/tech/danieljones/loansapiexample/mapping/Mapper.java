@@ -64,16 +64,38 @@ public class Mapper {
         return setupDetails;
     }
 
-//    public ScheduleResponse loanDetails2ScheduleResponse(LoanDetails loanDetails) {
-//        ScheduleResponse response = new ScheduleResponse();
-//
-//        response.setId(loanDetails.getId());
-//        response.setScheduleRequestDetails(setupDetails2SchedulePostBody(loanDetails.getSetupDetails()));
-//        response.setTotalPaymentsDue(loanDetails.getTotalPaymentsDue());
-//        response.setTotalInterestDue(loanDetails.getTotalInterestDue());
-//        response.setMonthlyRepayment(loanDetails.getMonthlyRepayment());
-//
-//    }
+    public ScheduleResponse loanDetails2ScheduleResponse(LoanDetails loanDetails) {
+        ScheduleResponse response = new ScheduleResponse();
+
+        response.setId(loanDetails.getId());
+        response.setScheduleRequestDetails(setupDetails2SchedulePostBody(loanDetails.getSetupDetails()));
+        response.setTotalPaymentsDue(loanDetails.getTotalPaymentsDue());
+        response.setTotalInterestDue(loanDetails.getTotalInterestDue());
+        response.setMonthlyRepayment(loanDetails.getMonthlyRepayment());
+
+        SchedulePostBody requestDetails = new SchedulePostBody();
+        requestDetails.setAssetValue(loanDetails.getSetupDetails().getAssetValue());
+        requestDetails.setBalloonAmount(loanDetails.getSetupDetails().getBalloonAmount());
+        requestDetails.setLoanDurationMonths(loanDetails.getSetupDetails().getLoanDurationMonths());
+        requestDetails.setDeposit(loanDetails.getSetupDetails().getDeposit());
+        requestDetails.setAnnualInterestPcnt(loanDetails.getSetupDetails().getAnnualInterestPcnt());
+
+        response.setScheduleRequestDetails(requestDetails);
+
+        for(ScheduleItem item : loanDetails.getScheduleItems()) {
+            tech.danieljones.loansapiexample.loans_api_example.model.ScheduleItem scheduleDetailsItem = new tech.danieljones.loansapiexample.loans_api_example.model.ScheduleItem();
+
+            scheduleDetailsItem.setPeriod((int) item.getPeriod());
+            scheduleDetailsItem.setBalance(item.getBalance());
+            scheduleDetailsItem.setInterest(item.getInterest());
+            scheduleDetailsItem.setPayment(item.getPayment());
+            scheduleDetailsItem.setPriciple(item.getPrinciple());
+
+            response.addScheduleDetailsItem(scheduleDetailsItem);
+        }
+
+        return response;
+    }
 
 
     public ScheduleListResponseItem loanDetails2ScheduleListResponseItem(LoanDetails loanDetails) {

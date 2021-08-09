@@ -37,7 +37,7 @@ public class ScheduleApiController implements SchedulesApi {
             response.addSchedulesItem(mapper.loanDetails2ScheduleListResponseItem(loanDetails));
         }
 
-        return ResponseEntity.ok(new ScheduleListResponse());
+        return ResponseEntity.ok(response);
     }
 
     @Override
@@ -57,7 +57,8 @@ public class ScheduleApiController implements SchedulesApi {
             throw new ScheduleNotFoundException(MessageFormat.format("Schedule with id {0} not found", id));
         }
 
+        ScheduleResponse response = mapper.loanDetails2ScheduleResponse(loanDetails.get());
 
-        return null;
+        return ResponseEntity.ok(response);
     }
 }

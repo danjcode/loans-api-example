@@ -30,8 +30,8 @@ public class CalculatorUtil {
     }
 
     private static void validateCalculateInterestParams(double balance, double annualInterestPcnt) {
-        if (!(balance > 0)) {
-            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Balance", balance));
+        if (balance < 0) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_EQ_OR_GT_ZERO_MESSAGE_FORMAT, "Balance", balance));
         }
 
         if (!(annualInterestPcnt > 0)) {
@@ -49,8 +49,8 @@ public class CalculatorUtil {
             throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Monthly Payment Amount", monthlyPaymentAmount));
         }
 
-        if (!(monthlyInterest > 0)) {
-            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_GT_ZERO_MESSAGE_FORMAT, "Monthly Interest", monthlyInterest));
+        if (monthlyInterest < 0) {
+            throw new InvalidCalculationParameterException(MessageFormat.format(INVALID_PARAM_EQ_OR_GT_ZERO_MESSAGE_FORMAT, "Monthly Interest", monthlyInterest));
         }
     }
 
@@ -83,8 +83,11 @@ public class CalculatorUtil {
     }
 
     private static double calculateMonthlyPaymentWithBalloon(double totalLoanAmount, double annualInterestPcnt, int numberOfPayments, double balloon) {
-
-        return (totalLoanAmount - (balloon / Math.pow(1 + annualInterestPcnt, numberOfPayments) * (annualInterestPcnt / Math.pow(1 + annualInterestPcnt, numberOfPayments))));
+        double monthlyInterestPcnt = annualInterestPcnt / 12;
+        double leftPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments);
+        double rightPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments);
+        double unroundedMonthlyRepayment = (totalLoanAmount - (balloon / leftPow * (monthlyInterestPcnt / rightPow)));
+        return new BigDecimal(unroundedMonthlyRepayment).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
     private static void validateTotalInterestParams(double loanAmount, double totalPayment) {
