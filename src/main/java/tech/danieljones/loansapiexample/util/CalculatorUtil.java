@@ -131,6 +131,7 @@ public class CalculatorUtil {
     }
 
     public static double calculateTotalInterest(double loanAmount, double totalPayment) {
+        validateTotalInterestParams(loanAmount, totalPayment);
         return totalPayment - loanAmount;
     }
 }
