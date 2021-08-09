@@ -85,8 +85,10 @@ public class CalculatorUtil {
     private static double calculateMonthlyPaymentWithBalloon(double totalLoanAmount, double annualInterestPcnt, int numberOfPayments, double balloon) {
         double monthlyInterestPcnt = annualInterestPcnt / 12;
         double leftPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments);
-        double rightPow = Math.pow(1 + monthlyInterestPcnt, numberOfPayments);
-        double unroundedMonthlyRepayment = (totalLoanAmount - (balloon / leftPow * (monthlyInterestPcnt / rightPow)));
+        double rightPow = Math.pow(1 + monthlyInterestPcnt, Math.negateExact(numberOfPayments));
+        double balloonPowDiv = balloon / leftPow;
+        double interestPowDiv = monthlyInterestPcnt / (1 - rightPow);
+        double unroundedMonthlyRepayment = (totalLoanAmount - balloonPowDiv) * interestPowDiv;
         return new BigDecimal(unroundedMonthlyRepayment).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 

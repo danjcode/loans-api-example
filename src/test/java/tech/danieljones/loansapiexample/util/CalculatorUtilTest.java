@@ -35,4 +35,9 @@ class CalculatorUtilTest {
     void calculateMonthlyPayment_NoBalloon() {
         assertEquals(400.76, CalculatorUtil.calculateMonthlyPayment(20000, 0.075, 60, 0));
     }
+
+    @Test
+    void calculateMonthlyPayment_WithBalloon() {
+        assertEquals(262.88, CalculatorUtil.calculateMonthlyPayment(20000, 0.075, 60, 10000));
+    }
 }
